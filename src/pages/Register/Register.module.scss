@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', system-ui;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: rgb(234, 253, 238);
+    
+    overflow: hidden;
+  }
+
+.forma{
+    text-align: center;
+}
+
+.textF{
+    margin-bottom: 30px !important;
+    width: 30% !important;
+}
+
+.button{
+    width: 30% !important;
+    height: 60px;
+    margin-bottom: 30px !important;
+    background-color: black !important;
+}
+
+.zag{
+    margin-top: 60px !important;
+    margin-bottom: 30px !important;
+}
