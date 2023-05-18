@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
 import styles from './Header.module.scss'
@@ -25,20 +24,20 @@ function Header(props){
       <div className={styles.HeaderRight}>
         {isAuth ? (
           <>
-            <p>
+            <p className="text-2xl mb-4 mr-4 font-bold">
               {userData.fullName}
             </p>
             <Link to="/login">
-              <Button onClick={OnClickLogout} className={styles.button} variant="contained">Вийти</Button>
+            <button className="mt-0 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0" onClick={OnClickLogout} variant="contained">Вийти</button>
             </Link>
           </>
           ) : (
           <>
             <Link to="/login">
-              <Button className={styles.button} variant="contained">Увійти</Button>
+              <button className="mt-0 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0">Увійти</button>
             </Link>
             <Link to="/register">
-              <Button className={styles.button} variant="contained">Створити акаунт</Button>
+              <button className="mt-0 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0">Створити акаунт</button>
             </Link>
           </>
           )}

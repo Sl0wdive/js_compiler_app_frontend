@@ -1,7 +1,6 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
@@ -61,9 +60,9 @@ function Register() {
           helperText={errors.password?.message}
           type='password'
           {...register('password', {required: 'Заповніть поле'})}/><br/>
-          <Button type="submit" className={styles.button} size="large" variant="contained">
+          <button className="mt-0 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0" type="submit" size="large" variant="contained">
           Створити
-          </Button>
+          </button>
         </form>
       </div>
     );

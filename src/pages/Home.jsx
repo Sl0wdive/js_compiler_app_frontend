@@ -3,15 +3,15 @@ import CodeEditor from '../components/CodeEditor';
 import Button from '@mui/material/Button';
 import { key, host  } from '../passwords.js';
 import axios from "axios";
-
+import Output from "../components/Output";
 
 function Home() {
   
-  const javascriptDefault = `сonsole.log(32);`;
+  const javascriptDefault = `console.log(2**4);`;
   const [code, setCode] = useState(javascriptDefault);
   const [theme] = useState('mytheme');
   const [processing, setProcessing] = useState(null);
-
+  const [outputDetails, setOutputDetails] = useState(null);
 
   const showErrorToast = (msg, timer) => {
   };
@@ -58,7 +58,6 @@ function Home() {
       })
       .catch((err) => {
         let error = err.response ? err.response.data : err;
-        // get error status
         let status = err.response.status;
         console.log("status", status);
         if (status === 429) {
@@ -66,7 +65,7 @@ function Home() {
 
           showErrorToast(
             `Requests exceeded for the Day!`,
-            10000
+            1000
           );
         }
         setProcessing(false);
@@ -80,8 +79,8 @@ function Home() {
       url: 'https://judge0-ce.p.rapidapi.com/submissions' + '/' + token,
       params: {base64_encoded: 'true'},
       headers: {
-        "X-RapidAPI-Key": '9192ca1565mshb77eca3efe77bc6p137dd3jsn55d186578615',
-        "X-RapidAPI-Host": 'judge0-ce.p.rapidapi.com',
+        "X-RapidAPI-Key": key,
+        "X-RapidAPI-Host": host,
       },
     };
     try {
@@ -96,7 +95,7 @@ function Home() {
       } else {
         setProcessing(false);
         console.log("response.data", response.data);
-        alert(atob(response.data.stdout));
+        setOutputDetails(response.data);
         return;
       }
     } catch (err) {
@@ -109,14 +108,29 @@ function Home() {
   
   
   return(
-    <>
-    <CodeEditor
-      code={code}
-      onChange={onChange}
-      theme={theme.value}
-    />
-    <Button onClick={handleCompile} variant="contained">Submit</Button>
-    </>
+    <div className="flex flex-row space-x-4 items-start px-4 py-4">
+        <div className="flex flex-col w-full h-full justify-start items-end">
+          <CodeEditor
+            code={code}
+            onChange={onChange}
+            language={63}
+            theme={theme.value}
+          />
+        </div>
+
+        <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
+          <Output outputDetails={outputDetails} />
+          <div className="flex flex-col items-end">
+            <button
+              onClick={handleCompile}
+              disabled={!code}
+              className="mt-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+            >
+              {processing ? "Processing..." : "Submit"}
+            </button>
+          </div>
+        </div>
+      </div>
   )
 }
 
