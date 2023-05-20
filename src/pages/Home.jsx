@@ -1,24 +1,50 @@
 import React, { useState } from "react";
 import CodeEditor from '../components/CodeEditor';
-import Button from '@mui/material/Button';
+import { useParams } from 'react-router-dom';
 import { key, host  } from '../passwords.js';
-import axios from "axios";
+import axios from "../axios";
 import Output from "../components/Output";
+
+import { useDispatch, useSelector } from 'react-redux';
+import { SelectisAuth } from '../redux/slices/auth';
+
+import DraftsRow from '../components/DraftsRow';
 
 function Home() {
   
   const javascriptDefault = `console.log(2**4);`;
+  const isAuth = useSelector(SelectisAuth);
   const [code, setCode] = useState(javascriptDefault);
   const [theme] = useState('mytheme');
   const [processing, setProcessing] = useState(null);
   const [outputDetails, setOutputDetails] = useState(null);
+  const [draftMain, setDraftMain] = React.useState(null);
+  const [draftLoading, setDraftLoading] = React.useState(true);
+  const {id} = useParams();
 
   const showErrorToast = (msg, timer) => {
   };
 
-  const OnClick = async () => {
-    // alert(code);
-  };
+    
+  React.useEffect(() =>{
+    if (id){
+    axios.get(`/${id}`)
+    .then(res =>{
+        setDraftMain(res.data);
+        setDraftLoading(false);
+        console.log(res.data.content)
+    }).catch((err) =>{
+        console.warn(err);
+        alert('Error');
+    });
+  }
+  }, []);
+
+  // React.useEffect(() =>{
+  //   console.log(draftMain);
+  // },[draftMain])
+
+  console.log("render");
 
   const onChange = (action, data) => {
     switch (action) {
@@ -106,16 +132,43 @@ function Home() {
   };
 
   
-  
   return(
+    <div>
+      <div className="ml-4">
+        {isAuth ? (
+          <>
+          <DraftsRow/>
+          </>
+          ) : (
+          <>
+            
+          </>
+        )}
+      </div>
     <div className="flex flex-row space-x-4 items-start px-4 py-4">
         <div className="flex flex-col w-full h-full justify-start items-end">
-          <CodeEditor
-            code={code}
-            onChange={onChange}
-            language={63}
-            theme={theme.value}
-          />
+          {id ? (<>
+            {draftLoading ? (
+            <></>) : 
+            (
+            <CodeEditor
+              code={draftMain.content}
+              onChange={onChange}
+              language={63}
+              theme={theme.value}
+            />
+            )
+          }
+          </>) : (<>
+            <CodeEditor
+              code={code}
+              onChange={onChange}
+              language={63}
+              theme={theme.value}
+            />
+          </>)
+
+          }
         </div>
 
         <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
@@ -130,6 +183,7 @@ function Home() {
             </button>
           </div>
         </div>
+      </div>
       </div>
   )
 }

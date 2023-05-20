@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './Header.module.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutw, SelectisAuth } from '../../redux/slices/auth';
+
 
 function Header(props){
   const dispatch = useDispatch();
@@ -18,17 +18,23 @@ function Header(props){
   };
 
   return(
-    <header className={styles.header}>
-      <div className={styles.HeaderLeft}>
+    <header>
+      <div className="flex items-center justify-between pt-5 pb-5">
+      <div className="flex items-center	">
+        <Link to="/">
+          <p className="text-4xl mb-6 ml-4 font-bold">
+            KurspilerJS
+          </p>
+        </Link>
       </div>
-      <div className={styles.HeaderRight}>
+      <div className="flex items-center	">
         {isAuth ? (
           <>
             <p className="text-2xl mb-4 mr-4 font-bold">
               {userData.fullName}
             </p>
             <Link to="/login">
-            <button className="mt-0 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0" onClick={OnClickLogout} variant="contained">Вийти</button>
+              <button className="mb-4 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0" onClick={OnClickLogout} variant="contained">Вийти</button>
             </Link>
           </>
           ) : (
@@ -42,6 +48,9 @@ function Header(props){
           </>
           )}
       </div>
+      </div>
+      
+      
     </header>
   );
 }

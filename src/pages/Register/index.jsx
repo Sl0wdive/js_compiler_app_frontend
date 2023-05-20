@@ -1,12 +1,8 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
-import styles from './Register.module.scss';
 import { fetchRegister, SelectisAuth } from '../../redux/slices/auth';
 
 
@@ -39,23 +35,23 @@ function Register() {
   }
 
   return (
-      <div className={styles.forma}>
-        <Typography className={styles.zag} variant="h5">
+      <div className="text-center">
+        <p className="text-4xl mb-6 font-bold">
           Створення акаунта
-        </Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <TextField className={styles.textF} label="Нікнейм"
+        </p>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center">
+          <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-3/12" label="Нікнейм"
           error={Boolean(errors.nickname?.message)}
           helperText={errors.nickname?.message}
           {...register('fullName', {required: 'Заповніть поле'})}/><br/>
 
-          <TextField className={styles.textF} label="E-Mail"
+          <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-3/12" label="E-Mail"
           error={Boolean(errors.email?.message)}
           helperText={errors.email?.message}
           type='email'
           {...register('email', {required: 'Заповніть поле'})}/><br/>
 
-          <TextField className={styles.textF} label="Пароль"
+          <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-3/12" label="Пароль"
           error={Boolean(errors.password?.message)}
           helperText={errors.password?.message}
           type='password'
