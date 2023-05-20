@@ -35,9 +35,9 @@ function DraftsRow(props){
                 draftLoading ? (
                 <></>
             ) : (
-                <Link to={`/${obj._id}`}>
+                <a href={`/${obj._id}`}>
                     <button className="mt-0 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 w-20 h-20">{index+1}</button>
-                </Link>
+                </a>
             ))}
           </>
           ) : (

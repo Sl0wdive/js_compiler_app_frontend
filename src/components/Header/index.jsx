@@ -21,11 +21,11 @@ function Header(props){
     <header>
       <div className="flex items-center justify-between pt-5 pb-5">
       <div className="flex items-center	">
-        <Link to="/">
+        <a href="/">
           <p className="text-4xl mb-6 ml-4 font-bold">
             KurspilerJS
           </p>
-        </Link>
+        </a>
       </div>
       <div className="flex items-center	">
         {isAuth ? (
