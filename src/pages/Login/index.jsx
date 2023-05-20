@@ -1,12 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { fetchUserData, SelectisAuth } from '../../redux/slices/auth';
 
 function Login() {
-  const navigate = useNavigate();
   const isAuth = useSelector(SelectisAuth)
   const dispatch = useDispatch();
   const { register, handleSubmit, setError, 
