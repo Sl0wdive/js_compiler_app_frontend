@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutw, SelectisAuth } from '../../redux/slices/auth';
+import { logoutw, SelectisAuth } from '../redux/slices/auth';
 
 
 function Header(props){

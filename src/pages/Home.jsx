@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import CodeEditor from '../components/CodeEditor';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { key, host  } from '../passwords.js';
 import axios from "../axios";
 import Output from "../components/Output";
-
 import { useDispatch, useSelector } from 'react-redux';
 import { SelectisAuth } from '../redux/slices/auth';
-
 import DraftsRow from '../components/DraftsRow';
 
 function Home() {
   
+  const navigate = useNavigate();
   const javascriptDefault = `console.log(2**4);`;
   const isAuth = useSelector(SelectisAuth);
   const [code, setCode] = useState(javascriptDefault);
@@ -20,7 +19,8 @@ function Home() {
   const [outputDetails, setOutputDetails] = useState(null);
   const [draftMain, setDraftMain] = React.useState(null);
   const [draftLoading, setDraftLoading] = React.useState(true);
-  const {id} = useParams();
+  const {id} = useParams();  
+
 
   const showErrorToast = (msg, timer) => {
   };
@@ -32,7 +32,7 @@ function Home() {
     .then(res =>{
         setDraftMain(res.data);
         setDraftLoading(false);
-        console.log(res.data.content)
+        setCode(res.data.content);
     }).catch((err) =>{
         console.warn(err);
         alert('Error');
@@ -40,9 +40,38 @@ function Home() {
   }
   }, []);
 
-  // React.useEffect(() =>{
-  //   console.log(draftMain);
-  // },[draftMain])
+  if (id){
+    if (!window.localStorage.getItem('token') && !isAuth){
+      return <Navigate to="/"/>
+    }
+  }
+
+  const onSave = async () => {
+    try {
+
+      const fields = {
+        content: code
+      }
+
+      await axios.post('/', fields) ;
+
+      window.location.reload(false);
+
+    } catch (err) {
+      console.warn(err);
+      alert('Перевищено обмеження збереження шаблонів');
+    }
+  };
+
+  const onDelete = async () => {
+    try {
+      await axios.delete(`/${id}`) ;
+
+    } catch (err) {
+      console.warn(err);
+      alert("Error");
+    }
+  };
 
   console.log("render");
 
@@ -53,7 +82,7 @@ function Home() {
         break;
       }
       default: {
-        console.warn("Буває", action, data);
+        console.warn("Error", action, data);
       }
     }
   };
@@ -173,13 +202,31 @@ function Home() {
 
         <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
           <Output outputDetails={outputDetails} />
-          <div className="flex flex-col items-end">
+          <div className="items-end">
+            {isAuth ? (<>
+            <button
+              onClick={onSave}
+              disabled={!code}
+              className="mt-4 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+              >
+              {"Save"}
+            </button>
+            {id ? (<>
+            <a href="/">
+              <button
+              onClick={onDelete}
+              className="mt-4 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+              >
+              {"Delete"}
+            </button></a>
+            </>) : (<></>)}
+            </>):(<></>)}
             <button
               onClick={handleCompile}
               disabled={!code}
-              className="mt-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+              className="mt-4 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
             >
-              {processing ? "Processing..." : "Submit"}
+              {"Submit"}
             </button>
           </div>
         </div>

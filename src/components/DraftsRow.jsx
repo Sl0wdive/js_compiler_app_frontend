@@ -1,14 +1,13 @@
 import React from 'react';
 import axios from '../axios';
-import { Link } from 'react-router-dom';
-
+import DeleteIcon from '@mui/icons-material/Clear';
+import IconButton from '@mui/material/IconButton';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { SelectisAuth } from '../redux/slices/auth';
 
 
 function DraftsRow(props){
-
   
   const dispatch = useDispatch();
   const isAuth = useSelector(SelectisAuth);
@@ -16,15 +15,25 @@ function DraftsRow(props){
   const [draftLoading, setDraftLoading] = React.useState(true);
   const [draft, setDraft] = React.useState();
 
-  axios.get(`/`)
-  .then(res =>{
-      setDraft(res.data);
-      setDraftLoading(false);
-  }).catch((err) =>{
-      console.warn(err);
-      alert('Error');
-  });
+  React.useEffect(() =>{
+    axios.get(`/`)
+    .then(res =>{
+        setDraft(res.data);
+        setDraftLoading(false);
+    }).catch((err) =>{
+        console.warn(err);
+        alert('Error');
+    });
+  }, []);
 
+  
+
+  function onClickRemove(id) {
+    if (window.confirm("Видалити допис?")){
+      // axios.delete(`/${id}`);
+      console.log(id);
+    }
+  };
 
   return(
     <header className="flex items-center justify-between pt-5 pb-5">
@@ -36,7 +45,8 @@ function DraftsRow(props){
                 <></>
             ) : (
                 <a href={`/${obj._id}`}>
-                    <button className="mt-0 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 w-20 h-20">{index+1}</button>
+                    <button className="mt-0 mr-4 border-2 border-black px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 w-20 h-20">{index+1}
+                    </button>
                 </a>
             ))}
           </>
