@@ -94,13 +94,13 @@ function Home() {
       headers: {
         'content-type': 'application/json',
         'Content-Type': 'application/json',
-        "X-RapidAPI-Key": '9192ca1565mshb77eca3efe77bc6p137dd3jsn55d186578615',
-        "X-RapidAPI-Host": 'judge0-ce.p.rapidapi.com',
+        "X-RapidAPI-Key": key,
+        "X-RapidAPI-Host": host,
       },
       data: {
         language_id: 63,
         source_code: code,
-        stdin: 1, //CInput
+        stdin: 1,
       }
     }
 
