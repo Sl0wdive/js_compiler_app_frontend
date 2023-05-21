@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-import { fetchUserData, SelectisAuth } from '../../redux/slices/auth';
+import { fetchUserData, SelectisAuth } from '../redux/slices/auth';
 
 function Login() {
   const isAuth = useSelector(SelectisAuth)

@@ -1,7 +1,5 @@
 import React from 'react';
 import axios from '../axios';
-import DeleteIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { SelectisAuth } from '../redux/slices/auth';
@@ -27,13 +25,6 @@ function DraftsRow(props){
   }, []);
 
   
-
-  function onClickRemove(id) {
-    if (window.confirm("Видалити допис?")){
-      // axios.delete(`/${id}`);
-      console.log(id);
-    }
-  };
 
   return(
     <header className="flex items-center justify-between pt-5 pb-5">
