@@ -22,7 +22,7 @@ function Header(props){
       <div className="flex items-center justify-between pt-5 pb-5">
       <div className="flex items-center	">
         <a href="/">
-          <p className="text-4xl mb-6 ml-4 font-bold">
+          <p className="text-4xl mb-2 ml-4 font-bold">
             KurspilerJS
           </p>
         </a>
